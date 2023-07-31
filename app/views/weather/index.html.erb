@@ -1,0 +1,18 @@
+<h1>Weather App</h1>
+
+<%= form_tag root_path, method: :get do %>
+  <%= text_field_tag :city, params[:city], placeholder: 'Enter city name' %>
+  <%= submit_tag 'Get Weather' %>
+<% end %>
+
+<% if @weather_data %>
+  <h2>Weather in <%= @weather_data['city']['name'] %></h2>
+  <% @weather_data['list'].each do |forecast| %>
+    <p>Date/Time: <%= Time.at(forecast['dt']).strftime('%Y-%m-%d %H:%M:%S') %></p>
+    <p>Temperature: <%= forecast['main']['temp'] %> °C</p>
+    <p>Weather: <%= forecast['weather'][0]['description'] %></p>
+    <hr>
+  <% end %>
+<% else %>
+  <p>City not found or API error.</p>
+<% end %>
